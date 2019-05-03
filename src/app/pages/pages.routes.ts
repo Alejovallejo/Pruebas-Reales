@@ -6,20 +6,25 @@ import { Graficas1Component } from './graficas1/graficas1.component';
 import { PagesComponent } from './pages.component';
 
 const pagesRoutes: Routes = [
-    
+
+
     {
-        path: '', 
+        path: '',
         component:PagesComponent,
-        children: [  
-            {path: 'dashboard', component:DashboardComponent},
-            {path: 'pogress', component:ProgressComponent},
-            {path: 'graficas1', component:Graficas1Component},
-            {path: '', redirectTo: '/dashboard', pathMatch: 'full'}
+        children: [
+    
+            { path: 'dashboard', component: DashboardComponent },
+            { path: 'progress', component: ProgressComponent },
+            { path: 'graficas1', component: Graficas1Component },
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 
         ]
     }
 ];
 
 
+
 export const PAGES_ROUTES = RouterModule.forChild( pagesRoutes );
+
+
 
