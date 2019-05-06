@@ -13,6 +13,7 @@ import { IncrementadorComponent } from '../components/incrementador/incrementado
 //ng2-charts
 import { ChartsModule } from 'ng2-charts';
 import { IncrementadorGraficaComponent } from '../components/incrementador-grafica/incrementador-grafica.component';
+import { AccoutSettingsComponent } from './accout-settings/accout-settings.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { IncrementadorGraficaComponent } from '../components/incrementador-grafi
         ProgressComponent,
         Graficas1Component,
         IncrementadorComponent,
-        IncrementadorGraficaComponent
+        IncrementadorGraficaComponent,
+        AccoutSettingsComponent
 
     ],
     exports: [
