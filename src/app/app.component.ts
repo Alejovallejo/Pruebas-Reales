@@ -7,9 +7,15 @@ import { SettingsService } from './services/settigns/settings.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(public _services: SettingsService){
+  constructor(public _services: SettingsService){ }
 
+}
+
+  class name {
+    constructor(parameters) {
+      
+    }
   }
 
   
-}
+
