@@ -2,3 +2,23 @@
 #themecolors a {
     cursor: pointer;
 }
+
+
+
+dialog {
+    visibility: hidden;
+    transform: scale(0.1);
+    transition: transform 200ms;
+}
+
+dialog.dialog-scale {
+    visibility: visible;
+    transform: scale(1);
+}
+
+
+.pointer {
+
+    cursor: pointer;
+
+}

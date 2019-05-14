@@ -15,9 +15,12 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';
 import { SharedModule } from './shared/shared.module';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from './services/settigns/settings.service';
-import * as fs from 'file-system';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginGuardGuard } from './services/services.index';
+
+
 
 
 @NgModule({
@@ -26,16 +29,22 @@ import * as fs from 'file-system';
     LoginComponent,
     RegisterComponent,
     
-    
+
   ],
   imports: [
     BrowserModule,
     APP_ROUTES,
     PagesModule,
+    ReactiveFormsModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
+    
   ],
-  providers: [SettingsService],
+  providers: [
+    SettingsService,
+    LoginGuardGuard
+  ],
   bootstrap: [AppComponent]
 })
 

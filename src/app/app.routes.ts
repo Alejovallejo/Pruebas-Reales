@@ -8,6 +8,8 @@ import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component
 import { RegisterComponent } from './login/register.component';
 
 
+
+
 const appRoutes: Routes = [
 
     
