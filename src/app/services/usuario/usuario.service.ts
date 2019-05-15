@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ɵConsole } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Usuario } from '../../modelos/usuario.modelo';
 import { URL_SERVICIOS } from 'src/app/config/config';
 import 'rxjs/add/operator/map'
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
 
 
 @Injectable({
@@ -17,7 +18,8 @@ export class UsuarioService {
 
   constructor(
     public http: HttpClient,
-    public router: Router
+    public router: Router,
+    public _subirArchivoService: SubirArchivoService
   ) { 
     console.log('Servicio de usuario listo para usar :)');
     this.cargarStorage();
@@ -25,7 +27,7 @@ export class UsuarioService {
 
   estaLogueado(){
     
-    return (this.token.length > 5) ? true: false;
+    return ( this.token.length > 5 ) ? true : false;
   }
 
 
@@ -33,7 +35,7 @@ export class UsuarioService {
     
     if(localStorage.getItem('token')){
 
-      this.token = localStorage.getItem('tokeb');
+      this.token = localStorage.getItem('token');
       this.usuario = JSON.parse(localStorage.getItem('usuario'));
 
     }else{
@@ -49,8 +51,8 @@ export class UsuarioService {
 
 
     localStorage.setItem('id', id );
-    localStorage.setItem('id', token );
-    localStorage.setItem('id', JSON.stringify(usuario));
+    localStorage.setItem('token', token );
+    localStorage.setItem('usuario', JSON.stringify(usuario));
     
     this.usuario = usuario;
     this.token = token;
@@ -80,7 +82,6 @@ export class UsuarioService {
   }
 
 
-
   login( usuario: Usuario, recordar: boolean = false ){
 
     if(recordar ){
@@ -88,9 +89,10 @@ export class UsuarioService {
     }else{
       localStorage.removeItem('email');
     }
+
+    
     
     let url = URL_SERVICIOS + '/login';
-    
 
 
     return this.http.post( url, usuario )
@@ -102,13 +104,7 @@ export class UsuarioService {
                   return true;
 
                 });
-
-
-              
-
   }
-
-
 
 crearUsuario( usuario: Usuario ){
 
@@ -128,6 +124,46 @@ crearUsuario( usuario: Usuario ){
           return resp.usuario;
 
     });
+
+}
+
+actualizarUsuario(usuario: Usuario){
+
+    let url = URL_SERVICIOS + '/usuario/' + usuario._id;
+
+    url += '?token=' + this.token;
+
+   return this.http.put(url, usuario)       
+           .map((resp: any) => {
+        
+              // this.usuario = resp.usuario;
+              let usuarioDB: Usuario = resp.usuario._id
+              this.guardarStorage(usuarioDB._id, this.token, usuarioDB)
+              Swal.fire('Usuario Actualizado', usuario.nombre, 'success');
+
+              return true;
+        
+          }); 
+
+}
+
+
+cambiarImagen(archivo: File, id: string){
+
+    this._subirArchivoService.subirArchivo( archivo, 'usuarios', id)
+        .then( (resp: any) => {
+            
+          this.usuario.img = resp.usuario.img;
+
+          Swal.fire('Imagen actualziada', this.usuario.role, 'success');
+            
+          this.guardarStorage(id, this.token, this.usuario);
+
+
+        })
+        .catch(resp =>{
+            console.log(resp);
+        })
 
 }
 

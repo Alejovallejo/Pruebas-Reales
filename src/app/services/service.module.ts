@@ -4,10 +4,12 @@ import { CommonModule } from '@angular/common';
 import { SettingsService,
       SharedService,
       UsuarioService, 
-      SidebarService
+      SidebarService,
+      SubirArchivoService
     } from './services.index';
-    
+
 import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -25,7 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     SettingsService,
     SidebarService,
     SharedService,
-    UsuarioService
+    UsuarioService,
+    SubirArchivoService
   ]
 })
 export class ServiceModule { }

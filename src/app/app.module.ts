@@ -23,11 +23,12 @@ import { LoginGuardGuard } from './services/services.index';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent,
+    RegisterComponent
     
 
   ],
