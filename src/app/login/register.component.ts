@@ -1,11 +1,15 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { UsuarioService } from '../services/services.index';
 import { Usuario } from '../modelos/usuario.modelo';
 import { Router } from '@angular/router';
 
+
+
 declare function init_plugins();
+
+
 
 @Injectable()
 
@@ -15,6 +19,8 @@ declare function init_plugins();
   styleUrls: ['./login.component.css']
 })
 export class RegisterComponent implements OnInit {
+
+  
 
   forma: FormGroup;
 
@@ -69,8 +75,7 @@ export class RegisterComponent implements OnInit {
         correo: 'alejandro.vallejo@vis.com.co',
         password: '123456',
         password2:'123456',
-        condiciones: true
-
+        condiciones: false
           
       });
 
@@ -116,5 +121,24 @@ export class RegisterComponent implements OnInit {
 
   }
 
+
+  TerminoTrueFalse(){
+    console.log(this.forma.value.condiciones)
+     if(this.forma.value.condiciones === false){
+        this.forma.setValue({
+        nombre: this.forma.value.nombre,
+        correo: this.forma.value.correo,
+        password: this.forma.value.password,
+        password2:this.forma.value.password2,
+        condiciones: true
+       
+      });
+
+      
+
+  }
+
+    
+  }
 
 }

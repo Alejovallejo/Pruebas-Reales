@@ -9,6 +9,7 @@ import { SettingsService,
     } from './services.index';
 
 import { HttpClientModule } from '@angular/common/http';
+import { ModealUploadService } from '../components/modal-upload/modal-upload.service';
 
 
 
@@ -28,7 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     SidebarService,
     SharedService,
     UsuarioService,
-    SubirArchivoService
+    SubirArchivoService,
+    ModealUploadService
   ]
 })
 export class ServiceModule { }

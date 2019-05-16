@@ -53,7 +53,8 @@
                         <div class="col-md-12">
                             <div class="checkbox checkbox-primary p-t-0">
                                 <input formControlName="condiciones" name="condiciones" id="checkbox-signup" type="checkbox">
-                                <label for="checkbox-signup"> He leido y acepto los <a href="#">Terminos y Condiciones</a></label>
+                                <label for="checkbox-signup"> He leido y acepto los </label>
+                                <a class="cosito" (click)="terminos()" data-toggle="modal" data-target="#exampleModalLong"> Terminos y Condiciones</a>
 
                                 <script type="text/ng-template" id="templateId">
                                     <h1>Template heading</h1>
@@ -102,4 +103,24 @@
             $("#recoverform").fadeIn();
         });
     </script>
+
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle"><span>Terminos y Condiciones</span></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Estos son los terminos y condiciones
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button (click)="TerminoTrueFalse()" type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>

@@ -6,6 +6,7 @@ import { Graficas1Component } from '../pages/graficas1/graficas1.component';
 import { SharedModule } from '../shared/shared.module';
 import { PagesComponent } from './pages.component';
 
+
 //Rutas
 import { PAGES_ROUTES } from './pages.routes';
 import { IncrementadorComponent } from '../components/incrementador/incrementador.component';
@@ -21,6 +22,8 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { ProfileComponent } from './profile/profile.component';
 import { CommonModule } from '@angular/common';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 
 
 
@@ -35,7 +38,9 @@ import { CommonModule } from '@angular/common';
         AccoutSettingsComponent,
         PromesasComponent,
         RxjsComponent,
-        ProfileComponent
+        ProfileComponent,
+        UsuariosComponent,
+        ModalUploadComponent
 
     ],
     exports: [

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { URL_SERVICIOS } from '../../config/config';
-import { Usuario } from '../../modelos/usuario.modelo';
-import { createHash } from 'crypto';
+
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +48,3 @@ export class SubirArchivoService {
 
   }
 }
-
-
-    // let url = URL_SERVICIOS + '/usuarios/' 
