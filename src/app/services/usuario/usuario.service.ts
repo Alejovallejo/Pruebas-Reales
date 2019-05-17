@@ -1,12 +1,13 @@
-import { Injectable, ɵConsole } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Usuario } from '../../modelos/usuario.modelo';
+import { Injectable, ɵConsole } from '@angular/core';import { HttpClient } from '@angular/common/http';
 import { URL_SERVICIOS } from 'src/app/config/config';
-import 'rxjs/add/operator/map'
+
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
+import { Usuario } from '../../models/usuario.model';
+import { map } from 'rxjs/operators';
 
+declare var swal: any;
 
 @Injectable({
   providedIn: 'root'
@@ -75,10 +76,10 @@ export class UsuarioService {
     let url = URL_SERVICIOS + '/login/google'
     
     return this.http.post( url, {token} )
-                .map((resp: any) => {
+                .pipe(map((resp: any) => {
                    this.guardarStorage(resp.id, resp.token, resp.usuario); 
                    return true;
-                });
+                }));
   }
 
 
@@ -96,14 +97,14 @@ export class UsuarioService {
 
 
     return this.http.post( url, usuario )
-                .map(  (resp: any) => {
+                .pipe(map(  (resp: any) => {
                   
                   this.guardarStorage(resp.id, resp.token, resp.usuario); 
 
 
                   return true;
 
-                });
+                }));
   }
 
 crearUsuario( usuario: Usuario ){
@@ -111,7 +112,7 @@ crearUsuario( usuario: Usuario ){
     let url = URL_SERVICIOS + '/usuario';
 
     return this.http.post( url, usuario )
-        .map( (resp: any) => {
+        .pipe(map( (resp: any) => {
           
           Swal.fire({
             title: 'Usuario Creado',
@@ -123,7 +124,7 @@ crearUsuario( usuario: Usuario ){
 
           return resp.usuario;
 
-    });
+    }));
 
 }
 
@@ -134,7 +135,7 @@ actualizarUsuario(usuario: Usuario){
     url += '?token=' + this.token;
 
    return this.http.put(url, usuario)       
-           .map((resp: any) => {
+           .pipe(map((resp: any) => {
         
             if(usuario._id === this.usuario._id){
 
@@ -147,7 +148,7 @@ actualizarUsuario(usuario: Usuario){
 
               return true;
         
-          }); 
+          })); 
 
 }
 
@@ -185,7 +186,7 @@ buscarUsuarios(termino:string){
   let url = URL_SERVICIOS + '/busqueda/coleccion/usuarios/' + termino;
 
   return this.http.get( url )
-              .map((resp: any) =>  resp.usuarios );
+              .pipe(map((resp: any) =>  resp.usuarios ));
 
 }
 
@@ -196,12 +197,12 @@ borrarUsuario(id: string){
   url += '?token=' + this.token;
 
   return this.http.delete(url)
-            .map( resp => {
+            .pipe(map( resp => {
 
                 Swal.fire('Usuario Eliminado Correctamente', 'success');
                 return true ;
 
-            });
+            }));
 
 }
 

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../../modelos/usuario.modelo';
-import { UsuarioService } from '../../services/usuario/usuario.service';
-import Swal from 'sweetalert2';
-import { ModealUploadService } from '../../components/modal-upload/modal-upload.service';
-
+import { Usuario } from '../../models/usuario.model';
+import { UsuarioService } from '../../services/service.index';
+import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
 
 declare var swal: any;
 
@@ -20,42 +18,35 @@ export class UsuariosComponent implements OnInit {
   totalRegistros: number = 0;
   cargando: boolean = true;
 
-  constructor(public _usuariosService: UsuarioService,
-              public _modalUploadService: ModealUploadService) { 
-    
-  }
+  constructor(
+    public _usuarioService: UsuarioService,
+    public _modalUploadService: ModalUploadService
+  ) { }
 
   ngOnInit() {
     this.cargarUsuarios();
+
     this._modalUploadService.notificacion
-        .subscribe( resp => {
-
-            this.cargarUsuarios()
-
-        });
+          .subscribe( resp => this.cargarUsuarios() );
   }
 
+  mostrarModal( id: string ) {
 
-  mostrarModal(id: string){
-    this._modalUploadService.mostartModal('usuarios', id)
+    this._modalUploadService.mostrarModal( 'usuarios', id );
   }
-  
 
-  
-  cargarUsuarios(){
-    
+  cargarUsuarios() {
+
     this.cargando = true;
 
-    this._usuariosService.cargarUsuarios( this.desde )
-        .subscribe((resp:any) => {
+    this._usuarioService.cargarUsuarios( this.desde )
+              .subscribe( (resp: any) => {
 
-          
-          this.totalRegistros = resp.total;
-          this.usuarios = resp.usuarios;
-          this.cargando = false;
-          
-            
-        });
+                this.totalRegistros = resp.total;
+                this.usuarios = resp.usuarios;
+                this.cargando = false;
+
+              });
 
   }
 
@@ -76,60 +67,58 @@ export class UsuariosComponent implements OnInit {
 
   }
 
-  buscarUsuario(termino: string){
+  buscarUsuario( termino: string ) {
 
-    if(termino.length <= 0){
+    if ( termino.length <= 0 ) {
       this.cargarUsuarios();
       return;
     }
 
     this.cargando = true;
 
-    this._usuariosService.buscarUsuarios(termino)
-        .subscribe((usuarios: Usuario[]) => {
-            this.usuarios = usuarios;
-            this.cargando = false
-        });
+    this._usuarioService.buscarUsuarios( termino )
+            .subscribe( (usuarios: Usuario[]) => {
+
+              this.usuarios = usuarios;
+              this.cargando = false;
+            });
 
   }
 
-  borrarUsuario(usuario: Usuario){
+  borrarUsuario( usuario: Usuario ) {
 
-    if(usuario._id === this._usuariosService.usuario._id){
-      Swal.fire('No se puede Borrar asi mismo', 'error');
+    if ( usuario._id === this._usuarioService.usuario._id ) {
+      swal('No puede borrar usuario', 'No se puede borrar a si mismo', 'error');
       return;
     }
 
-    Swal.fire({
-      title: "Esta seguro?",
-      text: 'Esta a punto de borrar a' + usuario.nombre
+    swal({
+      title: '¿Esta seguro?',
+      text: 'Esta a punto de borrar a ' + usuario.nombre,
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
     })
-    .then((borrar) => {
-      
-        // Swal.fire("Poof! Your imaginary file has been deleted!",)
-        console.log(borrar);
-        
-          if(borrar){
+    .then( borrar => {
 
-            this._usuariosService.borrarUsuario(usuario._id)
-                .subscribe( borrado => {
-                    console.log(borrado); 
-                    this.cargarUsuarios();
-                });
+      if (borrar) {
 
-          }
+        this._usuarioService.borrarUsuario( usuario._id )
+                  .subscribe( borrado => {
+                      this.cargarUsuarios();
+                  });
 
+      }
 
     });
 
-    
+  }
+
+  guardarUsuario( usuario: Usuario ) {
+
+    this._usuarioService.actualizarUsuario( usuario )
+            .subscribe();
 
   }
 
-  guardarUSuario(usuario: Usuario){
-
-      this._usuariosService.actualizarUsuario(usuario)
-          .subscribe();
-
-  }
 }

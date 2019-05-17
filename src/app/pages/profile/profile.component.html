@@ -4,55 +4,53 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Perfil del usuario</h4>
-                <h6 class="card-subtitle">nombre usuario</h6>
+                <h6 class="card-subtitle"> nombre usuario </h6>
 
-
-                <form ngNativeValidate #f="ngForm" (ngSubmit)="guardar(f.value)" class="form p-t-20">
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="guardar( f.value )" class="form p-t-20">
                     <div class="form-group">
-                        <label for="exampleInputuname">Nombre de Usuario</label>
+                        <label for="exampleInputuname">Nombre de usuario</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="ti-user"></i></div>
-                            <input [ngModel]="Usuario.nombre" name="nombre" type="text" class="form-control" placeholder="Nombre de Usuarrio" required>
+                            <input [ngModel]="usuario.nombre" name="nombre" type="text" class="form-control" placeholder="Nombre de usuario" required>
                         </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Correo de Usuario</label>
+                        <label for="exampleInputEmail1">Correo de usuario</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="ti-email"></i></div>
-                            <input [disabled]="Usuario.google" [ngModel]="Usuario.email" name="email" type="email" class="form-control"  placeholder="Correo del Usuario" required>
+                            <input [ngModel]="usuario.email" [disabled]="usuario.google" name="email" type="email" class="form-control" placeholder="Correo del usuario" required>
                         </div>
                     </div>
-                  <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
-                    Guardar
-                    <i class="fa fa-save" ></i>
-                  </button>
+
+                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                      <i class="fa fa-save"></i>
+                      Guardar
+                    </button>
                 </form>
             </div>
-          </div>
-      </div>
+        </div>
+    </div>
 
 
-        <div class="col-lg-5">
-            <div class="card">
-                <div class="card-body" align="center">
-                    <h4 class="card-title">Fotografía del usuario</h4>
-                    <h6 class="card-subtitle"> {{ Usuario.nombre }} </h6>
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-body" align="center">
+                <h4 class="card-title">Fotografía del usuario</h4>
+                <h6 class="card-subtitle"> nombre usuario </h6>
 
-                    <img *ngIf="!imagenTemp" [src]="Usuario.img | imagen" class="w150">
-                    <img *ngIf="imagenTemp" [src]="imagenTemp" class="w150">
+                <img *ngIf="!imagenTemp" [src]="usuario.img | imagen" class="w150">
+                <img *ngIf="imagenTemp" [src]="imagenTemp" class="w150">
 
+                <input (change)="seleccionImage($event.target.files[0])" type="file">
 
-                    <input (change)="seleccionImagen( $event.target.files[0] )" type="file">
+                <br><br>
 
-                    <br><br>
+                <button (click)="cambiarImagen()" [disabled]="!imagenSubir" type="button" class="btn btn-block btn-success waves-effect waves-light m-r-10">
+                    <i class="fa fa-save"></i>
+                    Actualizar Foto
+                  </button>
+            </div>
+        </div>
+    </div>
 
-                    <button (click)="cambiarImagen()" [disabled]="!imagenSubir"  type="button" class="btn btn-block btn-success waves-effect waves-light m-r-10">
-                        <i class="fa fa-save" ></i>
-                            Actualizar Foto
-                    </button>
-
-                    </div>
-                </div>
-     </div>
 </div>

@@ -1,40 +1,25 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { UsuarioService } from '../usuario/usuario.service';
-import { CompileShallowModuleMetadata } from '@angular/compiler';
 
+import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
-
 export class LoginGuardGuard implements CanActivate {
 
-  constructor( public _usuarioService: UsuarioService,
-              public router: Router
-    
-    ){
-  
+  constructor(
+    public _usuarioService: UsuarioService,
+    public router: Router
+  ) {}
 
-  }
+  canActivate() {
 
-
-  canActivate(){
-
-    if(this._usuarioService.estaLogueado()){
-      
-          
+    if ( this._usuarioService.estaLogueado() ) {
       return true;
+    } else {
+      console.log( 'Bloqueado por guard' );
+      this.router.navigate(['/login']);
+      return false;
+    }
 
-        }else{
-
-          console.log('BLoqueado por guard');
-          this.router.navigate(['/login']);
-
-        }
-    
-
-    return true;
   }
-  
-  
-
 }

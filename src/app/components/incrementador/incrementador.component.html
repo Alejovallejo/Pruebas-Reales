@@ -1,21 +1,19 @@
 <h3>
-  {{ leyenda }}
+    {{ leyenda }} - {{ progreso }}
 </h3>
 
 <div class="input-group">
-        <span class="input-group-btn">
-                <button class="btn btn-github" type="button" (click)="incremenDecre(-5)">
-                      <i class="mdi mdi-minus"></i>  
-                  </button>
+    <span class="input-group-btn">
+    <button class="btn btn-primary" type="button" (click)="cambiarValor(-5)">
+        <i class="mdi mdi-minus"></i>
+    </button>
+  </span>
 
-                    </span>
-                    <input #txtProgress type="number" class="form-control" name="porcentaje"  [(ngModel)]="porcentaje" (ngModelChange)="onChanges($event)" (keyup)="valorNeutral()">
-                    <span class="input-group-btn">
-                      <button class="btn btn-facebook" type="button" (click)="incremenDecre(+5)">
-                    
-                    <i class="mdi mdi-plus"></i>
-                </button>
-          
-        </span>
+    <input #txtProgress type="number" class="form-control" name="progreso" [(ngModel)]="progreso" (ngModelChange)="onChanges($event)" min="1" max="100">
 
+    <span class="input-group-btn">
+      <button class="btn btn-primary" type="button" (click)="cambiarValor(+5)">
+          <i class="mdi mdi-plus"></i>
+      </button>
+    </span>
 </div>

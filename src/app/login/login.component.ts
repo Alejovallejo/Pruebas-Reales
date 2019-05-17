@@ -2,7 +2,8 @@ import { Component, OnInit, ɵConsole } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { UsuarioService } from '../services/usuario/usuario.service';
-import { Usuario } from '../modelos/usuario.modelo';
+import { Usuario } from '../models/usuario.model';
+
 
 declare function init_plugins();
 declare const gapi: any;
@@ -59,6 +60,8 @@ export class LoginComponent implements OnInit {
 
       // let profile = googleUser.getBasicProfile();
       let token = googleUser.getAuthResponse().id_token;
+      console.log(token);
+      
 
       this.usuarioService.loginGoogle(token)
             .subscribe( () => {

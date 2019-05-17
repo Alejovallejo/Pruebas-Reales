@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SubirArchivoService } from '../../services/subir-archivo/subir-archivo.service';
-import Swal from 'sweetalert2';
-import { ModealUploadService } from './modal-upload.service';
+import { ModalUploadService } from './modal-upload.service';
+
+
+
+declare var swal: any;
 
 @Component({
   selector: 'app-modal-upload',
@@ -9,72 +12,61 @@ import { ModealUploadService } from './modal-upload.service';
   styles: []
 })
 export class ModalUploadComponent implements OnInit {
-  
 
   imagenSubir: File;
-  imagenTemp: any;
-  
-  
-    
+  imagenTemp: string;
+
   constructor(
-    public _cargaArchivoService: SubirArchivoService,
-    public _modaUploadService: ModealUploadService
-  ) {
-    
-    
-   }
+    public _subirArchivoService: SubirArchivoService,
+    public _modalUploadService: ModalUploadService
+  ) { }
 
   ngOnInit() {
   }
 
-
-  cerrarModal(){
+  cerrarModal() {
     this.imagenTemp = null;
     this.imagenSubir = null;
 
-    this._modaUploadService.ocultarModal();
+    this._modalUploadService.ocultarModal();
   }
 
+  seleccionImage( archivo: File ) {
 
-  
-
-
-  seleccionImagen(archivo){
-
-    if(!archivo){
-      this.imagenSubir = null
+    if ( !archivo ) {
+      this.imagenSubir = null;
       return;
     }
 
-    if(archivo.type.indexOf('image')<0){
-      Swal.fire('Sólo imagenes', 'El archivo seleccionado no es una imagen', 'error');
+    if ( archivo.type.indexOf('image') < 0 ) {
+      swal('Sólo imágenes', 'El archivo seleccionado no es una imagen', 'error');
       this.imagenSubir = null;
       return;
     }
 
     this.imagenSubir = archivo;
 
-    let reader = new FileReader();
-    let urlImagenTemp = reader.readAsDataURL(archivo);
+    let reader:any = new FileReader();
+    let urlImagenTemp = reader.readAsDataURL( archivo );
 
-    reader.onloadend = () => this.imagenTemp = reader.result
+
+    reader.onloadend = () => this.imagenTemp = reader.result;
+
   }
 
-  subirImagen(){
+  subirImagen() {
 
-    this._cargaArchivoService.subirArchivo(this.imagenSubir, this._modaUploadService.tipo, this._modaUploadService.id)
-          .then(resp => {
+    this._subirArchivoService.subirArchivo( this.imagenSubir, this._modalUploadService.tipo, this._modalUploadService.id )
+          .then( resp => {
 
-            this._modaUploadService.notificacion.emit(resp);
+            this._modalUploadService.notificacion.emit( resp );
             this.cerrarModal();
-          })
-          .catch(erro => {
 
-            console.log('error en la carga');
-            
+          })
+          .catch( err => {
+            console.log( 'Error en la carga... ');
           });
 
   }
-
 
 }

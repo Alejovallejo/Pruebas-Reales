@@ -6,48 +6,37 @@ import { URL_SERVICIOS } from '../config/config';
 })
 export class ImagenPipe implements PipeTransform {
 
-  transform(img: string, tipo: string = 'usuario'): any  {
-    
-    
+  transform( img: string, tipo: string = 'usuario'): any {
+
     let url = URL_SERVICIOS + '/img';
 
-
-    if( !img ){
-
-        return url + '/usuarios/xxx'
-
+    if ( !img ) {
+      return url + '/usuarios/xxx';
     }
 
-    if( img.indexOf('https') >= 0 ){
+    if ( img.indexOf('https') >= 0 ) {
       return img;
     }
 
-
-    switch( tipo ){
+    switch ( tipo ) {
 
       case 'usuario':
-          return url + '/usuarios/' + img
-        break;
-      
+        url += '/usuarios/' + img;
+      break;
 
       case 'medico':
-      return url += '/medicos/' + img;
-        break;
-
-          
+        url += '/medicos/' + img;
+      break;
 
       case 'hospital':
-      return url += '/hospital/' + img;
-        break;  
+         url += '/hospitales/' + img;
+      break;
 
-
-      default: 
-      console.log('Tipo de imagen bi exuste no existe, medocoma');
-      
-
+      default:
+        console.log('tipo de imagen no existe, usuario, medicos, hospitales');
+        url += '/usurios/xxx';
     }
-    
-    
+
     return url;
   }
 

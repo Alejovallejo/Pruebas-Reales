@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable,  Subscriber,  Subscription } from 'rxjs';
-import { retry, map, filter } from 'rxjs/operators';
-import Swal from 'sweetalert2';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { retry, map } from 'rxjs/operators';
+
+// tslint:disable-next-line:import-blacklist
 
 
- 
+
 
 @Component({
   selector: 'app-rxjs',
@@ -13,84 +14,58 @@ import Swal from 'sweetalert2';
 })
 export class RxjsComponent implements OnInit, OnDestroy {
 
-  subscription = new Subscription;
+  subscription: Subscription;
 
-  constructor() { 
+  constructor() {
+
+    this.subscription = this.regresaObservable()
+      .subscribe(
+          numero => console.log( 'Subs', numero ),
+          error => console.error('Error en el obs (dos veces)', error ),
+          () => console.log( 'El observador termino!' )
+        );
 
 
-
-    this.subscription = this.regresaObservable().subscribe(
-    numero => console.log('sub', numero),
-    error => console.log('Error en el Obs', error),
-    ()=> console.log('El observador Termino!.')
-    );
-
-   }
+  }
 
   ngOnInit() {
   }
 
-
-  ngOnDestroy(){
-    
-    Swal.fire('La pagina se va a cerrar.')
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
+  regresaObservable(): Observable<any> {
 
-  regresaObservable(): Observable<any>{
-    
-
-    return new Observable( (observer: Subscriber<any>) => {
+    return new Observable( observer => {
 
     let contador = 0;
 
-    let intervalo = setInterval(() => {
-        
+    let intervalo = setInterval( () => {
+
       contador += 1;
 
-      const salida = {
+      let salida = {
         valor: contador
       };
 
-      observer.next(salida);
+      observer.next( salida );
 
-      
-
-      if(contador  === 10){
-        clearInterval(intervalo);
-        observer.complete();
-      }
-
-      // if(contador === 2){
-      //   clearInterval(intervalo);
-      //   observer.error('!Error Auxilio')
+      // if ( contador === 3 ) {
+      //   clearInterval( intervalo );
+      //   observer.complete();
       // }
 
-    }, 1000);
-    
-      }).pipe(
-    
-        map( resp  => {
-          return resp.valor
-        }),
-        filter( (valor, index) => {
-  
-        if((valor % 2)==0){
-          return true
+      // if ( contador === 2 ) {
+      //   observer.error('Auxilio!');
+      // }
 
-        }else{
-          
-          return false
-        }
+    }, 500 );
 
-        
-        })
-      
-      )
-
-    
+  })
   }
 
-
 }
+
+
+

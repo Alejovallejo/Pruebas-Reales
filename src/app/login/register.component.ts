@@ -1,9 +1,10 @@
 import { Component, OnInit, Injectable, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { UsuarioService } from '../services/services.index';
-import { Usuario } from '../modelos/usuario.modelo';
+
 import { Router } from '@angular/router';
+import { UsuarioService } from '../services/service.index';
+import { Usuario } from '../models/usuario.model';
 
 
 
