@@ -6,8 +6,6 @@ import { Medico } from '../../models/medico.model';
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
-
-
 @Injectable()
 export class MedicoService {
 
@@ -23,7 +21,7 @@ export class MedicoService {
     let url = URL_SERVICIOS + '/medico';
 
     return this.http.get( url )
-             .pipe(map( (resp: any) => {
+              .pipe(map( (resp: any) => {
 
                 this.totalMedicos = resp.total;
                 return resp.medicos;
@@ -36,7 +34,7 @@ export class MedicoService {
     let url = URL_SERVICIOS + '/medico/' + id;
 
     return this.http.get( url )
-             .pipe(map( (resp: any) => resp.medico ));
+              .pipe(map( (resp: any) => resp.medico ));
 
   }
 
@@ -44,7 +42,7 @@ export class MedicoService {
 
     let url = URL_SERVICIOS + '/busqueda/coleccion/medicos/' + termino;
     return this.http.get( url )
-               .pipe(map( (resp: any) => resp.medicos ));
+                .pipe(map( (resp: any) => resp.medicos ));
 
   }
 
@@ -54,7 +52,7 @@ export class MedicoService {
     url += '?token=' + this._usuarioService.token;
 
     return this.http.delete( url )
-             .pipe(map( resp => {
+              .pipe(map( resp => {
                 Swal.fire( 'Médico Borrado', 'Médico borrado correctamente', 'success' );
                 return resp;
               }));
@@ -71,7 +69,7 @@ export class MedicoService {
       url += '?token=' + this._usuarioService.token;
 
       return this.http.put( url, medico )
-               .pipe(map( (resp: any) => {
+                .pipe(map( (resp: any) => {
                   Swal.fire('Médico Actualizado', medico.nombre, 'success');
                   return resp.medico;
 
@@ -81,7 +79,7 @@ export class MedicoService {
       // creando
       url += '?token=' + this._usuarioService.token;
       return this.http.post( url, medico )
-             .pipe(map( (resp: any) => {
+              .pipe(map( (resp: any) => {
                 Swal.fire('Médico Creado', medico.nombre, 'success');
                 return resp.medico;
               }));

@@ -1,10 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { retry, map } from 'rxjs/operators';
+import { retry, map, filter } from 'rxjs/operators';
 
 // tslint:disable-next-line:import-blacklist
-
-
 
 
 @Component({
@@ -63,6 +61,24 @@ export class RxjsComponent implements OnInit, OnDestroy {
     }, 500 );
 
   })
+  .pipe(retry(2)
+  ,map( (resp: any) => {
+
+    return resp.valor;
+  })
+  ,filter( (valor, index) => {
+
+    if ( (valor % 2) === 1 ) {
+      // impar
+      return true;
+    }else {
+      // par
+      return false;
+    }
+
+  }));
+
+
   }
 
 }

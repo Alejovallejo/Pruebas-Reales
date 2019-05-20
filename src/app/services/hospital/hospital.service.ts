@@ -6,9 +6,6 @@ import { Hospital } from '../../models/hospital.model';
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
-
-
-
 @Injectable()
 export class HospitalService {
 

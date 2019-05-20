@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Hospital } from '../../models/hospital.model';
 import { HospitalService } from '../../services/service.index';
-import { ModalUploadService } from 'src/app/components/modal-upload/modal-upload.service';
-import Swal from 'sweetalert2';
+import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
 
 
-
+declare var swal: any;
 
 @Component({
   selector: 'app-hospitales',
@@ -53,29 +52,39 @@ export class HospitalesComponent implements OnInit {
 
   }
 
-  
   borrarHospital( hospital: Hospital ) {
 
     this._hospitalService.borrarHospital( hospital._id )
             .subscribe( () =>  this.cargarHospitales() );
-  }
 
+  }
 
   crearHospital() {
-    
-    let nombre = prompt ('Nombre del hospital', ' ')
 
-    this._hospitalService.crearHospital(nombre)
-            .subscribe( () => this.cargarHospitales() );
+    swal({
+      title: 'Crear hospital',
+      text: 'Ingrese el nombre del hospital',
+      content: 'input',
+      icon: 'info',
+      buttons: true,
+      dangerMode: true
+    }).then( (valor: string ) => {
 
-  
-  
+      if ( !valor || valor.length === 0 ) {
+        return;
+      }
+
+      this._hospitalService.crearHospital( valor )
+              .subscribe( () => this.cargarHospitales() );
+
+    });
+
   }
-
 
   actualizarImagen( hospital: Hospital ) {
 
     this._modalUploadService.mostrarModal( 'hospitales', hospital._id );
-  }
-}
 
+  }
+
+}

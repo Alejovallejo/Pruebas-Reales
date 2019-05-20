@@ -12,17 +12,17 @@ export class HeaderComponent implements OnInit {
 
   usuario: Usuario;
 
-  constructor( public _usuarioService: UsuarioService,
-              public router: Router ) { }
+  constructor(
+    public _usuarioService: UsuarioService,
+    public router: Router
+  ) { }
 
   ngOnInit() {
     this.usuario = this._usuarioService.usuario;
   }
 
-  buscar(termino: string)  {
-
-    this.router.navigate(['/busqueda', termino]);
-
+  buscar( termino: string ) {
+    this.router.navigate(['/busqueda', termino ]);
   }
 
 }

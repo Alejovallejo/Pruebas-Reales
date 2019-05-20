@@ -13,7 +13,7 @@ export class LoginGuardGuard implements CanActivate {
 
   canActivate() {
 
-    if ( this._usuarioService.estaLogueado() ) {
+    if ( this._usuarioService.cargarUsuarios() ) {
       return true;
     } else {
       console.log( 'Bloqueado por guard' );
